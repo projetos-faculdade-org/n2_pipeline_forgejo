@@ -19,3 +19,14 @@ services:
     ports:
       - "3000:3000"
       - "222:22"
+
+  registry:
+    image: registry:2
+    container_name: registry
+    restart: always
+    networks:
+      - forgejo
+    volumes:
+      - ./registry:/var/lib/registry
+    ports:
+      - "5001:5000"

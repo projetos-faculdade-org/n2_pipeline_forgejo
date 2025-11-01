@@ -1,0 +1,35 @@
+name: mini-api-run
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  run-mini-api:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd mini-api
+          npm ci
+
+      - name: Start mini-api in background
+        run: |
+          cd mini-api
+          nohup npm start > /tmp/mini-api.log 2>&1 &
+
+      - name: Wait for health
+        run: |
+          for i in {1..10}; do
+            curl -sSf http://localhost:3001/health && exit 0 || sleep 1;
+          done
+          cat /tmp/mini-api.log
+          exit 1
