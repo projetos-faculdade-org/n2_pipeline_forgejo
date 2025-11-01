@@ -1,0 +1,16 @@
+{
+  "name": "mini-api",
+  "version": "0.1.0",
+  "description": "Minimal Express API for Forgejo Runner demos",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:dev": "nodemon src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
