@@ -17,10 +17,21 @@
 
 Nota: deixar as configurações padrão por enquanto. Para parar, use `docker-compose down`
 
-### Criando pipeline
+### Criando runner
 
 Antes de tudo, instale Forgejo Runner (link: `https://forgejo.org/docs/latest/admin/actions/runner-installation/`)
 
+
+
+### Criando pipeline
+
 1. na raiz do projeto, criar `.forgejo/workflows/build-docker.yaml`
 2. Dentro desse arquivo, definir o que o pipeline deve fazer.
-3. Para definir um runner
+3. Nesse caso, queremos que ele identifique um push na branch principal, gere build e em seguida, imagem Docker.
+4. Uma vez configurado, o pipeline deve ser executado automaticamente.
+5. Dê um `git push` na branch principal para testar a execução.
+
+### Verificando criação da imagem
+
+1. Mude para o diretório da imagem criada.
+2. Tente rodar a imagem com Docker usando `docker-compose up -d` para iniciar o contêiner.
