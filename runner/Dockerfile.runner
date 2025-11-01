@@ -1,0 +1,15 @@
+FROM alpine:latest
+
+RUN apk add --no-cache curl git bash dumb-init
+
+ENV ACT_RUNNER_VERSION 1.25.0
+
+RUN echo "Baixando act-runner v${ACT_RUNNER_VERSION}..." && \
+    curl -L -o /usr/local/bin/act-runner https://github.com/gitea/act-runner/releases/download/v${ACT_RUNNER_VERSION}/act-runner-linux-amd64 && \
+    chmod +x /usr/local/bin/act-runner
+
+RUN adduser -D act
+WORKDIR /home/act
+USER act
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
