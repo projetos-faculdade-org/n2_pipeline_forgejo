@@ -1,0 +1,12 @@
+services:
+  forgejo-runner:
+    runs-on: docker
+    image: codeberg.org/forgejo/runner:latest
+    container_name: forgejo-runner
+    entrypoint: ["forgejo-runner", "daemon"]
+    volumes:
+      - ./runner:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - FORGEJO_INSTANCE_URL=https://localhost:3000/
+      - RUNNER_NAME=my-runner
