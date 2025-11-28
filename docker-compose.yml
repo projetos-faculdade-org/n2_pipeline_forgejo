@@ -34,13 +34,17 @@ services:
   runner:
     image: code.forgejo.org/forgejo/runner:3.4.0
     container_name: forgejo-runner
-    restart: always
+    restart: unless-stopped
+    environment:
+      - FORGEJO_INSTANCE_URL=${FORGEJO_INSTANCE_URL:-http://server:3000}
+      - FORGEJO_RUNNER_REGISTRATION_TOKEN=${FORGEJO_RUNNER_REGISTRATION_TOKEN}
+      - FORGEJO_RUNNER_NAME=${FORGEJO_RUNNER_NAME:-docker-runner}
+      - FORGEJO_RUNNER_LABELS=${FORGEJO_RUNNER_LABELS:-docker:docker://node:20,ubuntu-latest:docker://node:20}
+      - DOCKER_HOST=unix:///var/run/docker.sock
     networks:
       - forgejo
     volumes:
       - ./forgejo-runner:/data
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - DOCKER_HOST=unix:///var/run/docker.sock
     depends_on:
       - server
